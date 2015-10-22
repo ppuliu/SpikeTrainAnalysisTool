@@ -14,7 +14,7 @@ W=cell(p,1);
 norm=ones(m,1)*sum(trainX'); % m x m
 cnn=zeros(m,m);
 for chN=1:m
-    fprintf('getting influence vector for channel: %d',chN);
+    fprintf('getting influence vector for channel: %d \n',chN);
     mainM=zeros(m,T);
     for i=1:p
         startPoint=(i-1)*m*m+1+m;

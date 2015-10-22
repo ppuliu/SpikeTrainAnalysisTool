@@ -10,7 +10,7 @@ function [optpara, cost, dynamicX] = cosineGLMTrain(trainX, minlag, maxlag, ncos
 % reg : L1 / L2
 
 options.Method = 'lbfgs'; 
-options.maxIter =1000;  
+options.maxIter =500;  
 options.maxFunEvals = 100000;
 options.display = 'on';
 options.DerivativeCheck = 'off';
