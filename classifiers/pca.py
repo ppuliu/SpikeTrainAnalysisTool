@@ -26,7 +26,7 @@ def read_features(files):
 
 				###### temporary #####
 				t=record_id.split('_');
-				record_id=t[1]+'_'+t[2];
+				record_id=t[1]+t[2]+'_'+t[3];
 				######
 
 				data=map(float,fields[1:])
@@ -37,7 +37,18 @@ def read_features(files):
 
 		nrecords.append(nfeature)
 
-	return ids, np.array(features), nrecords[0]
+	x=np.array(features)
+	# normalization
+	# subtract mean, divide by max
+	t1=np.ones([x.shape[0],1])
+	t2=x.mean(axis=0).reshape([x.shape[1],1]).T
+	x-=np.dot(t1,t2)
+
+	t2=abs(x).max(axis=0).reshape([x.shape[1],1]).T
+	norm=np.dot(t1,t2)+1e-9
+	x/=norm
+
+	return ids, x, nrecords[0]
 
 def pca(M,n_componets):
 

@@ -9,7 +9,8 @@ import networkx as nx
 features_list=['degree_pearson_correlation_coefficient','betweenness_centrality', \
 				'load_centrality', \
 				'average_shortest_path_length', \
-				'self_explanation_ratio', 'average_node_degree','mean_of_weights','median_of_weights','variance_of_weights']
+				'self_explanation_ratio', 'average_node_degree','mean_of_weights','median_of_weights','variance_of_weights', \
+				'negative_weights_ratio']
 
 
 def get_files(dir_path):
@@ -76,7 +77,7 @@ def get_average_degree(M):
 	'''
 	get the average node degree
 	'''	
-	total=sum(sum(M))
+	total=sum(sum(abs(M)))
 
 	n=len(M)
 
@@ -87,7 +88,7 @@ def get_mean(M):
 	return mean
 	'''
 
-	return np.mean(M)
+	return np.mean(abs(M))
 
 
 def get_variance(M):
@@ -95,14 +96,14 @@ def get_variance(M):
 	return variance
 	'''
 
-	return np.var(M)
+	return np.var(abs(M))
 
 def get_median(M):
 	'''
 	return median
 	'''
 
-	return np.median(M)
+	return np.median(abs(M))
 
 def get_self_expl_ratio(M):
 	'''
