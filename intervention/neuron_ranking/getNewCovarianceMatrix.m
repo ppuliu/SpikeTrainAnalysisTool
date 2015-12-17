@@ -3,12 +3,12 @@ function C_t=getNewCovarianceMatrix(S,R,U_t,C_tm1)
 %
 % SYNOPSIS: C_t=getNewCovarianceMatrix(S,R,U_t,C_tm1)
 %
-% INPUT S: input matrix	(mh+1) x  T
+% INPUT S: input matrix     mh x  T    mh=m*h+1
 %		R: output matrix	m x T
-%		U_t: estimated parameter matrix with peak probability
-%		C_tm1: covariance matrix at time tm-1                  
+%		U_t: estimated parameter matrix with peak probability  m x mh
+%		C_tm1: covariance matrix at time tm-1                  m^2h x m^2h
 %
-% OUTPUT 
+% OUTPUT C_t: new covariance matrix  m^2h x m^2h
 %
 % REMARKS
 %
@@ -18,3 +18,14 @@ function C_t=getNewCovarianceMatrix(S,R,U_t,C_tm1)
 % DATE: 08-Dec-2015
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+[mh,T]=size(S);
+[m,T]=size(R);
+I=eye(m);
+SK=kron(S,I);   % Kronecker tensor product
+SKT=kron(S',I);
+L=exp(U_t*S);   % predicted firing rate
+DIL=diag(L(:)); % diagonalized firing rate
+
+C_t=C_tm1-C_t*SK*inv(inv(DIL)+SKT*C_tm1*SK)*SKT*C_tm1;
+
+end

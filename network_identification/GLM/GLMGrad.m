@@ -50,13 +50,10 @@ obj=-sum(obj(:));
 
 if strcmp(reg,'L2')
     obj=obj+lamda*(w(m+1:end)'*w(m+1:end))/2; % L2 regularization
-    disp('2');
 else if strcmp(reg,'L1')
         obj=obj+lamda*(sum(abs(w(m+1:end)))); % L1 regularization
-        disp('1');
     end
 end
-disp('0');
 
 tempDiff=X0-mainMExp;
 grad=-tempDiff*bOne';
