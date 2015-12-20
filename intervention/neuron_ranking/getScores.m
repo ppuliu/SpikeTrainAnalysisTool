@@ -18,14 +18,25 @@ function scores=getScores(U,C,vRatio,X)
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 [m,mh]=size(U);
+T=size(X,2);
+aver_firerate=sum(X,2)/T;
+meanS=generateStimulation(aver_firerate, [], mh);
+meanLambda=exp(U*meanS);
+meanLambda(meanLambda==0)=1e-9;
+%meanLambda=(norm(meanLambda,'fro')/norm(1./meanLambda,'fro')).*(1./meanLambda);
+deltaC=(1./(meanLambda.*meanLambda));
+deltaC=generateStimulation(deltaC,[],mh);
+deltaC=(1./meanLambda)*deltaC';
+
+% deltaC
+
 scores=zeros(m,1);
 for i=1:m
     disp(i);
-    T=size(X,2);
-    aver_firerate=sum(X,2)/T;
+
     s=generateStimulation(aver_firerate, i, mh);
     tic
-    scores(i)=getScoreForStimulation(s,i,U,C, vRatio);
+    scores(i)=getScoreForStimulation(s,deltaC,i,U,C, vRatio);
     toc
 end
 

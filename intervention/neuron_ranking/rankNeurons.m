@@ -25,7 +25,7 @@ disp('training GLM model');
 disp('updating covariance matrix');
 %C=getCovarianceMatrixForEachNeuron(sum(S,2)/size(S,2), maskedNeurons, U,C_tm1);
 
-C=getCovarianceWithSelfInitialization(sum(S,2)/size(S,2), maskedNeurons, U_t);
+C=getCovarianceWithSelfInitialization(S, maskedNeurons, U);
 
 disp('getting scores');
 scores=getScores(U,C,vRatio,trainX{1,1});

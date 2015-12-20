@@ -40,10 +40,8 @@ for i=1:m
     toc
     
     norm(F,'fro')
-    % rescale initialization
-    scale=norm(F,'fro')/norm(ipC,'fro');
-    scale
-    C{i,2}=scale*ipC+F; % update
+
+    C{i,2}=ipC+F; % update
     tic
     C{i,1}=inv(C{i,2}); % get the covariance matrix
     toc

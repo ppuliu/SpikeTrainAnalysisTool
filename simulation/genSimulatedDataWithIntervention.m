@@ -22,15 +22,20 @@ function [R,P]=genSimulatedDataWithIntervention(W, initialS, t, fixValues)
 R=zeros(m,t);
 S=initialS;
 P=[];
-intial_p=1-exp(-exp(W*S));
+initial_p=1-exp(-exp(W*S));
 %sigma=intial_p/10;
-cliping_norm=intial_p'*intial_p;
+cliping_norm=2*norm(initial_p,'fro');
 for i=1:t
     p=1-exp(-exp(W*S));
-    norm=p'*p;
-    if norm>cliping_norm
-        p=(cliping_norm/norm).*p;
-    end
+    
+    % clipping
+    %pnorm=norm(p,'fro');
+    %if pnorm>cliping_norm
+    %    p=(cliping_norm/pnorm).*p;
+    %end
+    
+    % add noise
+    
     %delta=normrnd(0, sigma);
     %p=p+delta;
     %p(p<0)=0;

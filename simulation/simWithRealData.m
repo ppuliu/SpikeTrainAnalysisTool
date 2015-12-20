@@ -28,7 +28,6 @@ for i=minlag:maxlag
     S=[S;sum(X,2)/T];
 end
 S=[1; S];
-visualSeries(S');
 
 % fill S with average firing rate
 

@@ -1,4 +1,4 @@
-function score=getScoreForStimulation(s, stimuli, U,C, vRatio)
+function score=getScoreForStimulation(s, deltaC, stimuli, U,C, vRatio)
 %calculate scores for neurons and rank them
 %
 % SYNOPSIS: score=getScoreForStimulation(s,U,C, vRatio)
@@ -27,10 +27,10 @@ for i=1:m
             varianceScore=0;
             verificationScore=getVerificationScoreForOneNeuron(s,U(i,:));
         else if vRatio==0
-                varianceScore=getVarianceScoreForOneNeuron(s, U(i,:), C{i,1});
+                varianceScore=getVarianceScoreForOneNeuron(s, deltaC(i,:),U(i,:), C{i,1});
                 verificationScore=0;
             else
-                varianceScore=getVarianceScoreForOneNeuron(s, U(i,:), C{i,1});
+                varianceScore=getVarianceScoreForOneNeuron(s, deltaC(i,:), U(i,:), C{i,1});
                 verificationScore=getVerificationScoreForOneNeuron(s,U(i,:));
             end
         end

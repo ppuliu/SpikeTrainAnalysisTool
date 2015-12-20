@@ -28,7 +28,7 @@ W{1}=U_t;
 for i=1:num
     stimuli=ranking(i);
     [newdata,~]=simWithRealData(w, X, 1,20, 10000, [stimuli]);
-    visualSeries([simX newdata]);
+    %visualSeries([simX newdata]);
     
     data{i+1,1}=newdata;
     data{i+1,2}=[stimuli];
