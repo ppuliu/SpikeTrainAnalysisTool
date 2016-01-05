@@ -23,12 +23,13 @@ function C=getCovarianceMatrixForEachNeuron(S, maskedNeurons, U_t,C_tm1)
 
 C=cell(m,2);
 for i=1:m
-    disp(i);
     if ismember(i,maskedNeurons)
-        disp('masked');
+        fprintf('neuron %d masked \n',i);
         C{i,1}=C_tm1{i,1};
         C{i,2}=C_tm1{i,2};
         continue;
+    else
+        fprintf('updating covariance matrix for neuron %d \n',i);
     end
     ipC=C_tm1{i,2};   % the inversion of the covariance matrix
     lambda=exp(U_t(i,:)*S);    % 1 x T

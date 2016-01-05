@@ -21,10 +21,12 @@ C=cell(m,2);
 for i=1:m
     disp(i);
     if ismember(i,maskedNeurons)
-        disp('masked');
+        fprintf('neuron %d masked \n',i);
         C{i,1}=eye(mh,mh);
         C{i,2}=eye(mh,mh);
         continue;
+    else
+        fprintf('updating covariance matrix for neuron %d \n',i);
     end
     ipC=eye(mh,mh);   % the inversion of the covariance matrix
     lambda=exp(U_t(i,:)*S);    % 1 x T
