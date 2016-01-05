@@ -23,6 +23,7 @@ aver_firerate=sum(X,2)/T;
 meanS=generateStimulation(aver_firerate, [], mh);
 meanLambda=exp(U*meanS);
 meanLambda(meanLambda==0)=1e-9;
+meanS(meanS==0)=1e-9;
 
 % one initialization method
 %%%%meanLambda=(norm(meanLambda,'fro')/norm(1./meanLambda,'fro')).*(1./meanLambda);
@@ -31,9 +32,10 @@ meanLambda(meanLambda==0)=1e-9;
 % deltaC=(1./meanLambda)*deltaC';
 
 % another initialization method
-deltaC=(1./(meanLambda.*meanS));
+deltaC=(1./(meanLambda*meanS'));
 
-% deltaC
+%deltaC(1:10,:)
+%U*meanS
 
 scores=zeros(m,1);
 for i=1:m

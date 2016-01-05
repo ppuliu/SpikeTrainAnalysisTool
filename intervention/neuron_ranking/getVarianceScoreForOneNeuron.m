@@ -19,7 +19,8 @@ function score=getVarianceScoreForOneNeuron(s, deltaC, u_i, c_i)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 score=exp(u_i*s+0.5*s'*c_i*s)*(s'*c_i*s+deltaC*s);
+%fprintf('%d    %d    %d    %d\n',exp(u_i*s+0.5*s'*c_i*s),u_i*s,s'*c_i*s,deltaC*s);
 %score=exp(u_i*s+0.5*s'*c_i*s)*(s'*c_i*s);
 %score=deltaC*s;
-%score=exp(u_i*s)*deltaC*s;
+%score=exp(u_i*s)*(deltaC*s);
 end
