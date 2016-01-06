@@ -32,7 +32,7 @@ for i=1:num
     
     data{i+1,1}=newdata;
     data{i+1,2}=[stimuli];
-    [W{i+1}, ~, ~, ~]=getMeanParameters(data, 1, 20,1,'None');
+    [W{i+1}, ~, ~, ~]=getMeanParameters(data, 1, 20,1,'L1');
 end
 
 end
