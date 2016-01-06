@@ -24,13 +24,14 @@ n=length(W);
 diff=zeros(n,1);
 
 for i=1:n
-    eu=W{i}()
+    eu=W{i}(:,2:end);
+    ru=realU(:,2:end);
     if(type==0)
-        diff(i)=norm(W{i}-realU,'fro');
+        diff(i)=norm(eu-ru,'fro');
     else if(type==1)
-            diff(i)=norm(W{i}(realU>0)-realU(realU>0),'fro');
+            diff(i)=norm(eu(ru>0)-ru(ru>0),'fro');
         else
-            diff(i)=norm(W{i}(realU<0)-realU(realU<0),'fro');
+            diff(i)=norm(eu(ru<0)-ru(ru<0),'fro');
         end
     end
 end
