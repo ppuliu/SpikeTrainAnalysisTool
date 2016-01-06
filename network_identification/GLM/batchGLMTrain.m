@@ -41,7 +41,7 @@ for i=1:batchN
 end
 
 options.Method = 'lbfgs'; 
-options.maxIter =200;  
+options.maxIter =500;  
 options.maxFunEvals = 100000;
 options.display = 'on';
 options.DerivativeCheck = 'off';
