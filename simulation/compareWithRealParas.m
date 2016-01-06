@@ -1,4 +1,4 @@
-function compareWithRealParas(W, realU, type)
+function diff=compareWithRealParas(W, realU, type)
 %compare with real parameters
 %
 % SYNOPSIS: compareWithRealParas(W, realU)
@@ -20,10 +20,11 @@ function compareWithRealParas(W, realU, type)
 if ~exist('type','var')
     type=0;
 end
-n=size(W,1);
+n=length(W);
 diff=zeros(n,1);
 
 for i=1:n
+    eu=W{i}()
     if(type==0)
         diff(i)=norm(W{i}-realU,'fro');
     else if(type==1)
