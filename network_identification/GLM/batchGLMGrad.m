@@ -51,17 +51,17 @@ for bn=1:batchN
     for i=minlag:maxlag
         mainM=mainM+W{i}*dynamicX{i+1};
     end
-    mainM=mainM++b*bOne;
+    mainM=mainM+b*bOne;
     mainMExp=exp(mainM);
     obj_bn=X0.*mainM-mainMExp;
     obj_bn(maskedNeurons,:)=0;     % update obj according to masked neurons
     
     tempDiff=X0-mainMExp;
     grad_bn=-tempDiff*bOne';
-    grad_bn(maskedNeurons,:)=0;
+    grad_bn(maskedNeurons,:)=0;     % update gradients according to masked neurons
     for i=minlag:maxlag
         wGrad=-tempDiff*dynamicX{i+1}';
-        wGrad(maskedNeurons,:)=0;  % update obj according to masked neurons
+        wGrad(maskedNeurons,:)=0;  % update gradients according to masked neurons
 
         grad_bn=cat(1,grad_bn,wGrad(:));
     end

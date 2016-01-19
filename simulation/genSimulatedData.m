@@ -1,4 +1,4 @@
-function [R,P]=genSimulatedData(W, initialS, t)
+function [R,P]=genSimulatedData(W, initialS, t,fixValues)
 %generate simulated data
 %
 % SYNOPSIS: R=genSimulatedData(W, initialS, t)
@@ -21,26 +21,22 @@ function [R,P]=genSimulatedData(W, initialS, t)
 R=zeros(m,t);
 S=initialS;
 P=[];
-initial_p=1-exp(-exp(W*S));
-%sigma=intial_p/10;
-cliping_norm=2*norm(initial_p,'fro');
+
 for i=1:t
-    p=1-exp(-exp(W*S));
-    
-    % clipping
-    %pnorm=norm(p,'fro');
-    %if pnorm>cliping_norm
-    %    p=(cliping_norm/pnorm).*p;
-    %end
-    
+    %p=1-exp(-exp(W*S));
+    p=(exp(-exp(W*S)).*exp(W*S))*exp(0.999);
+       
     % add noise
     %delta=normrnd(0, sigma);
     %p=p+delta;
     %p(p<0)=0;
     %p(p>1)=1;    
+    noise=binornd(ones(m,1),0.001);
     r=binornd(ones(m,1),p);
+    %r(noise>0)=1-r(noise>0);
+    r(fixValues)=0;
     R(:,i)=r;
-    S=[S(1); S(m+2:end); r];
+    S=[S(1); r; S(2:mh-m)];
     P=[P p];
 end
 

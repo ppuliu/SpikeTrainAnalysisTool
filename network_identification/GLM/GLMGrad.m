@@ -42,7 +42,7 @@ for i=minlag:maxlag
     W{i}=reshape(w(startPoint:endPoint),[m m]);
     mainM=mainM+W{i}*dynamicX{i+1};
 end
-mainM=mainM++b*bOne;
+mainM=mainM+b*bOne;
 mainMExp=exp(mainM);
 obj=X0.*mainM-mainMExp;
 

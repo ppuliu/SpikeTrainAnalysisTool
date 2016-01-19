@@ -18,7 +18,7 @@ options.DerivativeCheck = 'off';
 dynamicX=cosineGLMPrepareData(trainX,minlag,maxlag,ncosines);
 m=size(trainX,1);
 
-para=rand(m + m*m*5,1)-0.5;
+para=rand(m + m*m*ncosines,1)-0.5;
 [optpara, cost] = minFunc( @(p) cosineGLMGrad(p,dynamicX,ncosines,lambda,reg), para, options);
  
 

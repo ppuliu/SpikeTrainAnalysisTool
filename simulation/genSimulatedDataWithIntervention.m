@@ -25,6 +25,8 @@ P=[];
 initial_p=1-exp(-exp(W*S));
 %sigma=intial_p/10;
 cliping_norm=2*norm(initial_p,'fro');
+
+noiseP=0.001;
 for i=1:t
     p=1-exp(-exp(W*S));
     
@@ -41,9 +43,11 @@ for i=1:t
     %p(p<0)=0;
     %p(p>1)=1;    
     r=binornd(ones(m,1),p);
+    noise=binornd(ones(size(r)),noiseP);
+    r(noise==1)=1;
     r(fixValues)=0;
     R(:,i)=r;
-    S=[S(1); S(m+2:end); r];
+    S=[S(1); r; S(m+2:end)];
     P=[P p];
 end
 

@@ -1,4 +1,4 @@
-function scores=getScores(U,C,vRatio,X)
+function scores=getScores(U,C,vRatio,aver_firerate,new)
 %get scores for all possible interventions
 %
 % SYNOPSIS: scores=getScores(U,C, X)
@@ -18,8 +18,6 @@ function scores=getScores(U,C,vRatio,X)
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 [m,mh]=size(U);
-T=size(X,2);
-aver_firerate=sum(X,2)/T;
 meanS=generateStimulation(aver_firerate, [], mh);
 meanLambda=exp(U*meanS);
 meanLambda(meanLambda==0)=1e-9;
@@ -42,8 +40,9 @@ for i=1:m
     disp(i);
 
     s=generateStimulation(aver_firerate, i, mh);
+    %s=generateStimulation(ones(m,1), i, mh);
     tic
-    scores(i)=getScoreForStimulation(s,deltaC,i,U,C, vRatio);
+    scores(i)=getScoreForStimulation(s,deltaC,i,U,C, vRatio,new);
     toc
 end
 

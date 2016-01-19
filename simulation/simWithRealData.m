@@ -44,7 +44,7 @@ end
 if intervention
     [R,P]=genSimulatedDataWithIntervention(U, S, t, fixValues);
 else
-    [R,~]=genSimulatedData(U, S, t);
+    [R,~]=genSimulatedDataWithIntervention(U, S, t,[]);
 end
 
 
