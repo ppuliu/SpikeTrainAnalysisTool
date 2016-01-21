@@ -1,4 +1,4 @@
-function [cor,ranks,simX]=simInteractiveExpBatch(U,dt,minlag,maxlag,num)
+function [cor,norms,ranks,simX]=simInteractiveExpBatch(U,dt,minlag,maxlag,num)
 %simulate interactive intervention experiment
 %
 % SYNOPSIS: cor=simInteractiveExpBatch(U,dt,minlag,maxlag)
@@ -16,26 +16,31 @@ function [cor,ranks,simX]=simInteractiveExpBatch(U,dt,minlag,maxlag,num)
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 [m,mh]=size(U);
-simX=genSimulatedData(U, ones(mh,1), 100000,[]);
+simX=genSimulatedData(U, ones(mh,1), 60000,[]);
 data={};
 data{1,1}=simX;
 data{1,2}=[];
 [U1, S1, ~, ~]=getMeanParameters(data, minlag, maxlag,1,'L2');
 firstCor=corr(U(:),U1(:));
+firstNorm=norm(U-U1,'fro');
 
 cor=[];
+norms=[];
 ranks=[];
 
 %% extend recording
 tcor=[firstCor];
+tnorm=[firstNorm]
 trank=zeros(num,1);
 for i=1:num
     data{i+1,1}=genSimulatedData(U, ones(mh,1), dt,[]);
     data{i+1,2}=[];
     [tU, tS, ~, ~]=getMeanParameters(data, minlag, maxlag,1,'L2');
     tcor=[tcor; corr(U(:),tU(:))];
+    tnorm=[tnorm;norm(U-tU,'fro')];
 end
 cor=[cor tcor];
+norms=[norms tnorm];
 ranks=[ranks trank];
 
 %% rate ranking
@@ -44,14 +49,17 @@ data{1,1}=simX;
 data{1,2}=[];
 [~,ranking]=sort(sum(simX,2),'descend');
 tcor=[firstCor];
+tnorm=[firstNorm]
 trank=ranking(1:num);
 for i=1:num
     data{i+1,1}=genSimulatedData(U, ones(mh,1), dt,[ranking(i)]);
     data{i+1,2}=[ranking(i)];
     [tU, tS, ~, ~]=getMeanParameters(data, minlag, maxlag,1,'L2');
     tcor=[tcor; corr(U(:),tU(:))];
+    tnorm=[tnorm;norm(U-tU,'fro')];
 end
 cor=[cor tcor];
+norms=[norms tnorm];
 ranks=[ranks trank];
 
 %% verification ranking
@@ -59,6 +67,7 @@ data={};
 data{1,1}=simX;
 data{1,2}=[];
 tcor=[firstCor];
+tnorm=[firstNorm]
 trank=[];
 tU=U1;
 used=[];
@@ -82,8 +91,10 @@ for i=1:num
     data{i+1,2}=[intervI];
     [tU, tS, ~, ~]=getMeanParameters(data, minlag, maxlag,1,'L2');
     tcor=[tcor; corr(U(:),tU(:))];
+    tnorm=[tnorm;norm(U-tU,'fro')];
 end
 cor=[cor tcor];
+norms=[norms tnorm];
 ranks=[ranks trank];
 
 %%
@@ -94,6 +105,7 @@ data={};
 data{1,1}=simX;
 data{1,2}=[];
 tcor=[firstCor];
+tnorm=[firstNorm]
 trank=[];
 tU=U1;
 tS=S1;
@@ -120,8 +132,10 @@ for i=1:num
     [tU, tS, ~, ~]=getMeanParameters(data, minlag, maxlag,1,'L2');
     tC=getCovarianceMatrixForEachNeuron(tS, [intervI], tU,tC);
     tcor=[tcor; corr(U(:),tU(:))];
+    tnorm=[tnorm;norm(U-tU,'fro')];
 end
 cor=[cor tcor];
+norms=[norms tnorm];
 ranks=[ranks trank];
 
 %% new var ranking
@@ -129,6 +143,7 @@ data={};
 data{1,1}=simX;
 data{1,2}=[];
 tcor=[firstCor];
+tnorm=[firstNorm]
 trank=[];
 tU=U1;
 tS=S1;
@@ -155,8 +170,10 @@ for i=1:num
     [tU, tS, ~, ~]=getMeanParameters(data, minlag, maxlag,1,'L2');
     tC=getCovarianceMatrixForEachNeuron(tS, [intervI], tU,tC);
     tcor=[tcor; corr(U(:),tU(:))];
+    tnorm=[tnorm;norm(U-tU,'fro')];
 end
 cor=[cor tcor];
+norms=[norms tnorm];
 ranks=[ranks trank];
 
 end

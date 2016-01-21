@@ -29,7 +29,7 @@ for i=1:m
                 if neg==1
                     net(i,j)=-1;
                 else
-                    lag=randi([minlag,maxlag],1,1);
+                    lag=1;%randi([minlag,maxlag],1,1);
                     net(i,j)=lag;
                 end
             end
