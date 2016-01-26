@@ -25,15 +25,17 @@ P=[];
 for i=1:t
     %p=1-exp(-exp(W*S));
     p=(exp(-exp(W*S)).*exp(W*S))*exp(0.999);
-       
+    %p=exp(W*S);   
+    
     % add noise
-    %delta=normrnd(0, sigma);
-    %p=p+delta;
-    %p(p<0)=0;
-    %p(p>1)=1;    
-    noise=binornd(ones(m,1),0.001);
+    delta=normrnd(0, 0.0005);
+    p=p+delta;
+    p(p<0)=0;
+    p(p>1)=1;    
+    
     r=binornd(ones(m,1),p);
-    %r(noise>0)=1-r(noise>0);
+%     noise=binornd(ones(m,1),0.001);
+%     r(noise>0)=1-r(noise>0);
     r(fixValues)=0;
     R(:,i)=r;
     S=[S(1); r; S(2:mh-m)];

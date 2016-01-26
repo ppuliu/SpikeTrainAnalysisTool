@@ -24,6 +24,8 @@ data{1,2}=[];
 firstCor=corr(U(:),U1(:));
 firstNorm=norm(U-U1,'fro');
 
+cachedData=cell(m,1);
+
 cor=[];
 norms=[];
 ranks=[];
@@ -52,7 +54,13 @@ tcor=[firstCor];
 tnorm=[firstNorm]
 trank=ranking(1:num);
 for i=1:num
-    data{i+1,1}=genSimulatedData(U, ones(mh,1), dt,[ranking(i)]);
+    if isempty(cachedData{ranking(i)})     
+        data{i+1,1}=genSimulatedData(U, ones(mh,1), dt,[ranking(i)]);
+        cachedData{ranking(i)}=data{i+1,1};
+    else
+        data{i+1,1}=cachedData{ranking(i)};
+    end
+    %data{i+1,1}=genSimulatedData(U, ones(mh,1), dt,[ranking(i)]);
     data{i+1,2}=[ranking(i)];
     [tU, tS, ~, ~]=getMeanParameters(data, minlag, maxlag,1,'L2');
     tcor=[tcor; corr(U(:),tU(:))];
@@ -86,8 +94,13 @@ for i=1:num
             break;
         end
     end
-    
-    data{i+1,1}=genSimulatedData(U, ones(mh,1), dt,[intervI]);
+    if isempty(cachedData{intervI})     
+        data{i+1,1}=genSimulatedData(U, ones(mh,1), dt,[intervI]);
+        cachedData{intervI}=data{i+1,1};
+    else
+        data{i+1,1}=cachedData{intervI};
+    end
+    %data{i+1,1}=genSimulatedData(U, ones(mh,1), dt,[intervI]);
     data{i+1,2}=[intervI];
     [tU, tS, ~, ~]=getMeanParameters(data, minlag, maxlag,1,'L2');
     tcor=[tcor; corr(U(:),tU(:))];
@@ -126,8 +139,13 @@ for i=1:num
             break;
         end
     end
-    
-    data{i+1,1}=genSimulatedData(U, ones(mh,1), dt,[intervI]);
+    if isempty(cachedData{intervI})     
+        data{i+1,1}=genSimulatedData(U, ones(mh,1), dt,[intervI]);
+        cachedData{intervI}=data{i+1,1};
+    else
+        data{i+1,1}=cachedData{intervI};
+    end    
+    %data{i+1,1}=genSimulatedData(U, ones(mh,1), dt,[intervI]);
     data{i+1,2}=[intervI];
     [tU, tS, ~, ~]=getMeanParameters(data, minlag, maxlag,1,'L2');
     tC=getCovarianceMatrixForEachNeuron(tS, [intervI], tU,tC);
@@ -164,11 +182,67 @@ for i=1:num
             break;
         end
     end
-    
-    data{i+1,1}=genSimulatedData(U, ones(mh,1), dt,[intervI]);
+    if isempty(cachedData{intervI})     
+        data{i+1,1}=genSimulatedData(U, ones(mh,1), dt,[intervI]);
+        cachedData{intervI}=data{i+1,1};
+    else
+        data{i+1,1}=cachedData{intervI};
+    end    
+    %data{i+1,1}=genSimulatedData(U, ones(mh,1), dt,[intervI]);
     data{i+1,2}=[intervI];
     [tU, tS, ~, ~]=getMeanParameters(data, minlag, maxlag,1,'L2');
     tC=getCovarianceMatrixForEachNeuron(tS, [intervI], tU,tC);
+    tcor=[tcor; corr(U(:),tU(:))];
+    tnorm=[tnorm;norm(U-tU,'fro')];
+end
+cor=[cor tcor];
+norms=[norms tnorm];
+ranks=[ranks trank];
+
+
+%% mix: new var + validation
+
+ver_rank=ranks(:,3);
+var_rank=ranks(:,5);
+
+data={};
+data{1,1}=simX;
+data{1,2}=[];
+tcor=[firstCor];
+tnorm=[firstNorm]
+trank=[];
+used=[];
+model_choosed=1;
+for i=1:num
+    
+    if model_choosed==1
+        model_choosed=2;
+        ranking=ver_rank;
+    else
+        model_choosed=1;
+        ranking=var_rank;
+    end
+        
+    intervI=ranking(1);
+    for j=1:length(ranking)
+        if ismember(ranking(j),used)
+            continue
+        else
+            intervI=ranking(j);
+            used=[used intervI];
+            trank=[trank;intervI];
+            break;
+        end
+    end
+    if isempty(cachedData{intervI})     
+        data{i+1,1}=genSimulatedData(U, ones(mh,1), dt,[intervI]);
+        cachedData{intervI}=data{i+1,1};
+    else
+        data{i+1,1}=cachedData{intervI};
+    end    
+    %data{i+1,1}=genSimulatedData(U, ones(mh,1), dt,[intervI]);
+    data{i+1,2}=[intervI];
+    [tU, tS, ~, ~]=getMeanParameters(data, minlag, maxlag,1,'L2');
     tcor=[tcor; corr(U(:),tU(:))];
     tnorm=[tnorm;norm(U-tU,'fro')];
 end

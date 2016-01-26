@@ -29,7 +29,7 @@ for i=1:m
                 if neg==1
                     net(i,j)=-1;
                 else
-                    lag=1;%randi([minlag,maxlag],1,1);
+                    lag=randi([1,2],1,1);
                     net(i,j)=lag;
                 end
             end
@@ -38,5 +38,35 @@ for i=1:m
 end
 
 rate=-9+6*rand(m,1);
+
+%direction j-->i
+% neg_signs=zeros(m,1);
+% for j=1:m
+%     neg=binornd(1,p_neg);
+%     neg_signs(j)=neg;
+%     for i=1:m
+%         if i==j
+%             net(i,j)=-1;
+%         else
+%             conn=binornd(1,p_conn);
+%             if conn==1
+%                 if neg==1
+%                     net(i,j)=-1;
+%                 else
+%                     lag=randi([1,2],1,1);
+%                     net(i,j)=lag;
+%                 end
+%             end
+%         end
+%     end
+% end
+% 
+% rate=-9+6*rand(m,1);
+% for i=1:m
+%     if neg_signs(i)==1
+%         rate(i)=-3;
+%     end
+% end
+    
 end
             
