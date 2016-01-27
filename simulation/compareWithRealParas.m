@@ -24,8 +24,8 @@ n=length(W);
 diff=zeros(n,1);
 
 for i=1:n
-    eu=W{i}(:,2:end);
-    ru=realU(:,2:end);
+    eu=W{i}(:,1:end);
+    ru=realU(:,1:end);
     if(type==0)
         diff(i)=norm(eu-ru,'fro');
     else if(type==1)

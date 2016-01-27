@@ -37,7 +37,7 @@ for i=1:m
     end
 end
 
-rate=-9+6*rand(m,1);
+rate=-10+7*rand(m,1);
 
 %direction j-->i
 % neg_signs=zeros(m,1);
@@ -64,6 +64,9 @@ rate=-9+6*rand(m,1);
 % rate=-9+6*rand(m,1);
 % for i=1:m
 %     if neg_signs(i)==1
+%         rate(i)=-3;
+%     end
+%     if sum(net(:,i))==-1
 %         rate(i)=-3;
 %     end
 % end
