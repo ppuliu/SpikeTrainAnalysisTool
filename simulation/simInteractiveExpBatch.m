@@ -51,7 +51,7 @@ data{1,1}=simX;
 data{1,2}=[];
 [~,ranking]=sort(sum(simX,2),'descend');
 tcor=[firstCor];
-tnorm=[firstNorm]
+tnorm=[firstNorm];
 trank=ranking(1:num);
 for i=1:num
     if isempty(cachedData{ranking(i)})     
