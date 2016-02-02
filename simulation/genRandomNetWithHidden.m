@@ -89,16 +89,16 @@ while ~done
         done=0;
     end
    
-    for i=1:m
-        for j=1:m
-            if i~=j && net(i,j)<0 && sum(net(i,:))>=-1
-                done=0;
-            end
-            if i~=j && net(i,j)<0 && rate(j)<rate(i)
-                done=0;
-            end
-        end
-    end
+%     for i=1:m
+%         for j=1:m
+%             if i~=j && net(i,j)<0 && sum(net(i,:))>=-1
+%                 done=0;
+%             end
+%             if i~=j && net(i,j)<0 && rate(j)<rate(i)
+%                 done=0;
+%             end
+%         end
+%     end
    
 %     for i=m-1:m
 %         if sum(net(:,i))<0
