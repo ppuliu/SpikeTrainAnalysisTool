@@ -22,7 +22,8 @@ data{1,1}=simX;
 data{1,2}=[];
 [U1, S1, ~, ~]=getMeanParameters(data, minlag, maxlag,1,'L2');
 firstCor=corr(U(:),U1(:));
-firstNorm=norm(U-U1,'fro');
+%firstNorm=norm(U-U1,'fro');
+firstNorm=norm(U(:,2:end)-U1(:,2:end),'fro');
 
 cachedData=cell(m,1);
 
@@ -39,7 +40,8 @@ for i=1:num
     data{i+1,2}=[];
     [tU, tS, ~, ~]=getMeanParameters(data, minlag, maxlag,1,'L2');
     tcor=[tcor; corr(U(:),tU(:))];
-    tnorm=[tnorm;norm(U-tU,'fro')];
+    %tnorm=[tnorm;norm(U-tU,'fro')];
+    tnorm=[tnorm;norm(U(:,2:end)-tU(:,2:end),'fro')];
 end
 cor=[cor tcor];
 norms=[norms tnorm];
@@ -64,7 +66,8 @@ for i=1:num
     data{i+1,2}=[ranking(i)];
     [tU, tS, ~, ~]=getMeanParameters(data, minlag, maxlag,1,'L2');
     tcor=[tcor; corr(U(:),tU(:))];
-    tnorm=[tnorm;norm(U-tU,'fro')];
+    %tnorm=[tnorm;norm(U-tU,'fro')];
+    tnorm=[tnorm;norm(U(:,2:end)-tU(:,2:end),'fro')];
 end
 cor=[cor tcor];
 norms=[norms tnorm];
@@ -104,7 +107,8 @@ for i=1:num
     data{i+1,2}=[intervI];
     [tU, tS, ~, ~]=getMeanParameters(data, minlag, maxlag,1,'L2');
     tcor=[tcor; corr(U(:),tU(:))];
-    tnorm=[tnorm;norm(U-tU,'fro')];
+    %tnorm=[tnorm;norm(U-tU,'fro')];
+    tnorm=[tnorm;norm(U(:,2:end)-tU(:,2:end),'fro')];
 end
 cor=[cor tcor];
 norms=[norms tnorm];
@@ -150,7 +154,8 @@ for i=1:num
     [tU, tS, ~, ~]=getMeanParameters(data, minlag, maxlag,1,'L2');
     tC=getCovarianceMatrixForEachNeuron(tS, [intervI], tU,tC);
     tcor=[tcor; corr(U(:),tU(:))];
-    tnorm=[tnorm;norm(U-tU,'fro')];
+    %tnorm=[tnorm;norm(U-tU,'fro')];
+    tnorm=[tnorm;norm(U(:,2:end)-tU(:,2:end),'fro')];
 end
 cor=[cor tcor];
 norms=[norms tnorm];
@@ -193,7 +198,8 @@ for i=1:num
     [tU, tS, ~, ~]=getMeanParameters(data, minlag, maxlag,1,'L2');
     tC=getCovarianceMatrixForEachNeuron(tS, [intervI], tU,tC);
     tcor=[tcor; corr(U(:),tU(:))];
-    tnorm=[tnorm;norm(U-tU,'fro')];
+    %tnorm=[tnorm;norm(U-tU,'fro')];
+    tnorm=[tnorm;norm(U(:,2:end)-tU(:,2:end),'fro')];
 end
 cor=[cor tcor];
 norms=[norms tnorm];
@@ -244,7 +250,8 @@ for i=1:num
     data{i+1,2}=[intervI];
     [tU, tS, ~, ~]=getMeanParameters(data, minlag, maxlag,1,'L2');
     tcor=[tcor; corr(U(:),tU(:))];
-    tnorm=[tnorm;norm(U-tU,'fro')];
+    %tnorm=[tnorm;norm(U-tU,'fro')];
+    tnorm=[tnorm;norm(U(:,2:end)-tU(:,2:end),'fro')];
 end
 cor=[cor tcor];
 norms=[norms tnorm];
