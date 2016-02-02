@@ -16,7 +16,7 @@ function [net,rate]=genRandomNetWithHidden(m, p_conn, p_neg, minlag, maxlag)
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-rndm=ceil(m*0.2);
+rndm=ceil(m*0.1);
 m=m-rndm;
 
 done=0;
