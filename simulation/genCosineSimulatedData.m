@@ -1,4 +1,4 @@
-function [X,P]=genCosineSimulatedData(w,m,minlag, maxlag, p, t, fixValues)
+function [X,P]=genCosineSimulatedData(w,m,minlag, maxlag, p, t, fixValues,N,value)
 %gen simulated data with cosine GLM
 %
 % SYNOPSIS: X=genCosineSimulatedData(w,minlag, maxlag, p, dt, fixValues)
@@ -15,6 +15,14 @@ function [X,P]=genCosineSimulatedData(w,m,minlag, maxlag, p, t, fixValues)
 % DATE: 20-Jan-2016
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+if ~exist('N','var')
+    N=1;
+end
+
+if ~exist('value','var')
+    value=0;
+end
 
 % get the parameter matrix
 b=reshape(w(1:m),[m 1]);
@@ -45,7 +53,11 @@ for i=1:t
     p=(exp(-exp(U*S)).*exp(U*S));%*exp(0.999);
     r=binornd(ones(m,1),p);
 
-    r(fixValues)=0;
+    if rem(floor((i/t)*N),2)==0
+        r(fixValues)=value;
+    else
+        r(fixValues)=1-value;
+    end
     X=[X r];
     P=[P p];
 end
