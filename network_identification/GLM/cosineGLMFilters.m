@@ -1,13 +1,14 @@
 function filters=cosineGLMFilters(w, m, minlag, maxlag, p)
 %get cosine bump filters 
 %
-% SYNOPSIS: filters=cosineFilters(w, minlag, maxlag, p)
+% SYNOPSIS: filters=cosineFilters(w, m, minlag, maxlag, p)
 %
 % INPUT w: flatten array of parameters
+%       m: number of neurons
 %		minlag:
 %		maxlag:
 %		p: number of cosine functions  
-%       m: number of neurons
+%       
 %
 % OUTPUT filters: 3 dimensional array  [m,m,t]; t: time lag m: number of neurons
 %

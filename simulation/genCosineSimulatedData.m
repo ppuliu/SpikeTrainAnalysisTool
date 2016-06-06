@@ -50,7 +50,8 @@ for i=1:t
     S=X(:,i:i+lag-1)*ihbasis;
     S=[1;S(:)];
     %p=1-exp(-exp(U*S));
-    p=(exp(-exp(U*S)).*exp(U*S));%*exp(0.999);
+    %p=(exp(-exp(U*S)).*exp(U*S));%*exp(0.999);
+    p=exp(U*S)./(1+exp(U*S));
     r=binornd(ones(m,1),p);
 
     if rem(floor((i/t)*N),2)==0
