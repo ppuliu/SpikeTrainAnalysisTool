@@ -11,9 +11,10 @@ end
 plot(Y');%,'Color','black');
 %set(gca,'YTick',[]);
 xlim([0 SMP]);
-xlabel('time');
-set(gca,'Box','off');
-title('Raw time series');
+%xlabel('time');
+ylim([0 CHN]);
+set(gca,'Box','on');
+%title('Raw time series');
 
 % shift the ytick labels
 ax = gca;
